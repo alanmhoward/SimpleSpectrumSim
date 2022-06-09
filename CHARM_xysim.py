@@ -7,6 +7,8 @@ import math
 
 # Plot either the final position spectra or the individual events
 plot_spectra = False
+# Subtract the threshold from the amplitude value - artifacts will appear in the position spectra without this
+threshold_subtract = False
 
 # Define a Gaussian distribution with a sensible width and amplitude
 g_amp = 1000.
@@ -47,7 +49,8 @@ for i in range (0,num_events):
   for chan in range (xstart, xend+1):
     
     val = g_amp * math.exp( -( (chan-entry)**2 ) / (2*g_width**2) ) 
-    #val = g_amp * math.exp( -( (chan-entry)**2 ) / (2*g_width**2) ) - thresh
+    if (subtract_threshold==True):
+      val -= thresh
     valsum += val
     total += val*chan
     # If event plotting is on add points
